@@ -10,46 +10,66 @@ library.add(faTrash);
 
 function App() {
 
-  const [list, setList] = useState([]);
-  const [task, setTask] = useState("");
-  const [taskDone, setTaskDone] = useState(false);
+  const [list, setList] = useState([{task: "boire", done:false}]);
+  const [input, setInput] = useState("");
+
 
   const handleChange = (e) => {
-    setTask(e.target.value);
+    setInput(e.target.value);
   }
-console.log({task});
+console.log({input});
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const newList = [...list];
-    newList.push(task);
+    newList.push({task:input, done:false});
     setList(newList);
   }
 
-  const handleCheckOn = () => {
-    setTaskDone(true);
-  }
-  const handleCheckOff = () => {
-    setTaskDone(false);
-  }
 
-  const handleDelete = () => {
-    const newList = [...list];
-    newList.delete;
-    setList(newList);
-  }
+
+
 
   console.log({list});
 
   return (
     <div className="App">
-      <div className="list">{list.map((elem, index) => {
+      <div className="list">{list.map(({task, done}, index) => {
         return (
           <div className="tasks">
-        <input id="check" type="checkbox" onClick={#check.checked ? handleCheckoff : handleCheckOn}/>
-        <span key={index} className={taskDone ? "task_done" : ""}>{elem}</span>
-        <FontAwesomeIcon icon="trash" onClick={handleDelete}/>
-        </div>)
+            <input
+              type="checkbox"
+              name="task_done"
+              onChange={
+               !list[index].done ? (
+                 () => {
+                const newList = [...list];
+                newList[index].done = true;
+                setList(newList);
+                 }
+               ) : (
+                () => {
+                const newList = [...list];
+                newList[index].done = false;
+                setList(newList);
+                }
+              )
+              }   
+            
+            />
+            <span key={index} className={done ? "task_done" : "task_todo"}>
+              {task}
+            </span>
+            <FontAwesomeIcon
+              icon="trash"
+              onClick={() => {
+                const newList = [...list];
+                newList.splice(index, 1);
+                setList(newList);
+              }}
+            />
+          </div>
+        );
 
       })}</div>
       <form onSubmit={handleSubmit}>

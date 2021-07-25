@@ -10,3 +10,7 @@
 .task_done {
   text-decoration: line-through;
 }
+
+.task_todo {
+  text-decoration: none;
+}
